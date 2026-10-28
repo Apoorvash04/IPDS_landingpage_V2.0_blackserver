@@ -1,0 +1,1564 @@
+/* ==========================================================================
+   IPDS — design tokens
+   Brand red sampled from the logo: #E41146
+   Performance rule for this file: animate ONLY transform & opacity.
+   ========================================================================== */
+:root {
+  --red: #e41146;
+  --red-hi: #ff3b6b;
+  --red-lo: #a50a31;
+  --red-a10: rgba(228, 17, 70, 0.1);
+  --red-a20: rgba(228, 17, 70, 0.2);
+  --red-a35: rgba(228, 17, 70, 0.35);
+
+  --bg: #07080c;
+  --bg-alt: #0b0d13;
+  --surface: #11131b;
+  --surface-2: #161924;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.14);
+
+  --text: #eef0f5;
+  --muted: #9aa1b2;
+  --green: #22d37a;
+
+  --radius: 16px;
+  --font-head: var(--font-sora), 'Sora', system-ui, sans-serif;
+  --font-body: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-head);
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 4.6vw, 3.7rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3.4vw, 2.6rem);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.text-red {
+  color: var(--red);
+  background: linear-gradient(100deg, var(--red-hi), var(--red) 60%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red-hi);
+  padding: 6px 14px;
+  border: 1px solid var(--red-a35);
+  background: var(--red-a10);
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+
+.pulse-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+}
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--red);
+  animation: ping 1.8s var(--ease) infinite;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.97rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.25s var(--ease), background-color 0.25s, border-color 0.25s;
+}
+.btn svg {
+  transition: transform 0.25s var(--ease);
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn:hover svg {
+  transform: translateX(4px);
+}
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--red-hi), var(--red) 55%, var(--red-lo));
+  box-shadow: 0 10px 30px -10px rgba(228, 17, 70, 0.7);
+}
+.btn-ghost {
+  color: var(--text);
+  border-color: var(--line-2);
+  background: rgba(255, 255, 255, 0.03);
+}
+.btn-ghost:hover {
+  border-color: var(--red);
+}
+.btn-block {
+  width: 100%;
+}
+
+/* ---------- Load-in & scroll reveal ---------- */
+.load-in {
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* keyframe-based so hover transitions on the same element stay independent */
+.reveal {
+  opacity: 0;
+}
+.reveal.is-visible {
+  opacity: 1;
+  animation: fadeUp 0.8s var(--ease) var(--d, 0ms) backwards;
+}
+
+/* Paused scopes: animations stop when off-screen */
+.is-paused,
+.is-paused * {
+  animation-play-state: paused !important;
+}
+
+/* ==========================================================================
+   Navbar
+   ========================================================================== */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-bottom: 1px solid transparent;
+}
+.nav-scrolled {
+  background: rgba(7, 8, 12, 0.92);
+  border-bottom-color: var(--line);
+}
+.nav-inner {
+  height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo img {
+  width: 64px;
+  height: 64px;
+  transform-origin: left center;
+  transition: transform 0.35s var(--ease);
+  filter: drop-shadow(0 0 18px rgba(228, 17, 70, 0.45));
+}
+.nav-scrolled .nav-logo img {
+  transform: scale(0.75);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-text {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.08rem;
+  letter-spacing: -0.01em;
+}
+.brand-text b {
+  color: var(--red);
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.nav-links a:not(.btn) {
+  position: relative;
+  font-size: 0.94rem;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.nav-links a:not(.btn)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+.nav-links a:not(.btn):hover {
+  color: var(--text);
+}
+.nav-links a:not(.btn):hover::after {
+  transform: scaleX(1);
+}
+.nav-cta {
+  padding: 10px 20px;
+}
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--line-2);
+  color: var(--text);
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Hero — 3D server corridor
+   ========================================================================== */
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  padding: 92px 0 40px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+/* ---------- brand fly-out ---------- */
+.brand-stage {
+  position: relative;
+  margin-bottom: 26px;
+}
+.brand-stage::before {
+  /* soft dark pool behind the name so it reads over the bright racks */
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(1100px, 120vw);
+  height: 260%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(7, 8, 12, 0.85), rgba(7, 8, 12, 0.5) 40%, transparent 70%);
+  opacity: 0;
+  animation: ledOn 1s ease 1.8s both;
+  pointer-events: none;
+}
+.brand-title {
+  position: relative;
+  font-family: var(--font-brand), var(--font-head);
+  font-size: clamp(1.9rem, 4.3vw, 3.7rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(140, 8, 36, 0.75), 0 2px 0 rgba(60, 4, 16, 0.6);
+  animation: brandIn 1.7s 1.5s both;
+}
+.brand-title b {
+  color: #e0163f;
+  text-shadow: 0 0 24px rgba(176, 12, 46, 0.9);
+}
+.brand-flash {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 360px;
+  height: 360px;
+  margin: -180px 0 0 -180px;
+  border-radius: 50%;
+  border: 2px solid #c8123a;
+  background: radial-gradient(circle, rgba(150, 10, 40, 0.4), transparent 65%);
+  opacity: 0;
+  animation: brandFlash 1.1s ease-out 2.65s both;
+  pointer-events: none;
+}
+.brand-line {
+  display: block;
+  width: min(520px, 70%);
+  height: 2px;
+  margin: 22px auto 0;
+  background: linear-gradient(90deg, transparent, #7a0a22, #e0163f, #ff8aa3, #e0163f, #7a0a22, transparent);
+  transform: scaleX(0);
+  animation: drawX 0.9s var(--ease) 2.75s both;
+}
+.hero-tag {
+  max-width: 640px;
+  margin: 0 auto 32px;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  color: #c9cdd8;
+}
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+/* hero accents: bold crimson-to-maroon instead of the bright pink-red */
+.hero .text-red {
+  color: #e0163f;
+  background-image: linear-gradient(100deg, #ff3d5e, #c8123a 55%, #9a0d2c);
+}
+.hero .btn-primary {
+  background: linear-gradient(135deg, #d4143c, #9e0e2c 55%, #5c0717);
+  box-shadow: 0 10px 30px -10px rgba(140, 8, 36, 0.85);
+}
+.hero .btn-ghost:hover {
+  border-color: #b0102f;
+}
+
+.corridor {
+  /* corridor geometry */
+  /* Geometry scales with the viewport so the nearest racks always reach past the screen edges
+     (no empty strips at the sides on wide screens). The walls sit just outside the screen at z=0. */
+  --half: 52vw;                 /* center -> rack wall */
+  --rh: max(62vw, 125vh);       /* rack height: taller than the screen at the front */
+  --step: max(30vw, 220px);     /* spacing between slices */
+  --rw: var(--step);           /* rack depth = spacing: racks touch, continuous wall */
+  --persp: max(55vw, 360px);
+  --dur: 7s;       /* time for one slice to travel the whole loop (~390px/s cruise) */
+  position: absolute;
+  inset: 0;
+}
+.scene {
+  position: absolute;
+  inset: 0;
+  perspective: var(--persp);
+  perspective-origin: 50% 42%;
+  overflow: hidden;
+}
+.world {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform-style: preserve-3d;
+  /* intro: the whole server room rushes forward out of the dark. This push is added on top of the
+     looping slice motion, so it eases out to zero and the scene glides into cruise speed with no jolt. */
+  animation: approach 3.2s cubic-bezier(0.25, 0.6, 0.3, 1) both;
+}
+.slice {
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: fly var(--dur) linear infinite;
+  animation-delay: calc(var(--i) * var(--dur) / -8);
+}
+
+/* glow at the far end of the corridor */
+.corridor-light {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 70vmin;
+  height: 70vmin;
+  margin: -35vmin 0 0 -35vmin;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(170, 200, 255, 0.32), rgba(70, 120, 230, 0.12) 35%, transparent 68%);
+  animation: glow 4s ease-in-out infinite;
+}
+.corridor-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(7, 8, 12, 0.55) 0%, transparent 18%, transparent 72%, rgba(7, 8, 12, 0.6) 90%, var(--bg) 100%),
+    radial-gradient(ellipse at 50% 42%, transparent 50%, rgba(7, 8, 12, 0.45) 100%);
+}
+
+/* ---------- rack ---------- */
+.crack {
+  position: absolute;
+  left: calc(var(--rw) / -2);
+  top: calc(var(--rh) / -2);
+  width: var(--rw);
+  height: var(--rh);
+  /* fades in at the far end so racks emerge from the darkness */
+  animation: spawn var(--dur) linear infinite;
+  animation-delay: calc(var(--i) * var(--dur) / -8);
+}
+.crack-l {
+  /* mirrored like the right wall: dense drive bays at the far end, LEDs toward the viewer,
+     so the strip at the screen edge is never sparse glass */
+  transform: translateX(calc(var(--half) * -1)) rotateY(-90deg);
+}
+.crack-r {
+  transform: translateX(var(--half)) rotateY(-90deg);
+}
+
+/* steel wireframe that "draws" itself first */
+.crack-frame::before,
+.crack-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.crack-frame::before {
+  border-top: 2px solid rgba(150, 175, 215, 0.55);
+  border-bottom: 2px solid rgba(150, 175, 215, 0.35);
+  animation: drawX 0.6s var(--ease) var(--b) both;
+}
+.crack-frame::after {
+  border-left: 3px solid #05070a;
+  border-right: 3px solid #05070a;
+  animation: drawY 0.6s var(--ease) calc(var(--b) + 0.15s) both;
+}
+
+/* dark steel cabinet full of 1U servers (one unit = --u) */
+.crack-body {
+  --u: 38px;
+  position: absolute;
+  inset: 0;
+  background:
+    /* gap + top highlight between server units */
+    repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0 2px, rgba(190, 210, 240, 0.1) 2px 3px, transparent 3px var(--u)) 0 26px,
+    /* faint sheen across the faceplates */
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05), transparent 25%, rgba(255, 255, 255, 0.03) 60%, transparent 85%),
+    linear-gradient(180deg, #1a1f2a, #11141c 45%, #161a24);
+  box-shadow: inset 0 0 0 1px rgba(140, 165, 205, 0.16), inset 10px 0 0 #07090d, inset -10px 0 0 #07090d, inset 0 0 60px rgba(0, 0, 0, 0.6);
+  transform-origin: bottom;
+  animation: buildUp 0.7s var(--ease) calc(var(--b) + 0.45s) both;
+}
+.crack-body > span {
+  position: absolute;
+  top: 26px;
+  bottom: 16px;
+}
+/* cabinet top panel with a dim cool light bar */
+.rb-head {
+  left: 0;
+  right: 0;
+  top: 0 !important;
+  bottom: auto !important;
+  height: 26px;
+  background:
+    linear-gradient(90deg, transparent 20%, rgba(120, 170, 255, 0.35) 20% 80%, transparent 80%) center / 100% 2px no-repeat,
+    #0a0c12;
+}
+/* front vents (left part of each server) */
+.rb-vent {
+  left: 4%;
+  width: 30%;
+  background: repeating-linear-gradient(90deg, rgba(200, 215, 240, 0.08) 0 1px, transparent 1px 4px);
+  -webkit-mask: repeating-linear-gradient(180deg, transparent 0 9px, #000 9px 30px, transparent 30px 38px);
+  mask: repeating-linear-gradient(180deg, transparent 0 9px, #000 9px 30px, transparent 30px 38px);
+}
+/* hot-swap drive bays */
+.rb-bays {
+  left: 37%;
+  width: 44%;
+  background: repeating-linear-gradient(90deg, rgba(200, 215, 240, 0.14) 0 1px, #0b0e14 1px 13px, rgba(0, 0, 0, 0.8) 13px 14px);
+  -webkit-mask: repeating-linear-gradient(180deg, transparent 0 7px, #000 7px 31px, transparent 31px 38px);
+  mask: repeating-linear-gradient(180deg, transparent 0 7px, #000 7px 31px, transparent 31px 38px);
+}
+/* status panel on the right of each server */
+.rb-panel {
+  left: 84%;
+  width: 12%;
+  background: repeating-linear-gradient(180deg, transparent 0 8px, rgba(0, 0, 0, 0.55) 8px 30px, transparent 30px 38px);
+}
+
+/* LEDs — tiny glowing dashes. Each layer is one element with a tiled background; mismatched tile
+   sizes and per-rack offsets make the pattern look random, and the layers blink out of phase. */
+.cled {
+  --c: #22d37a;
+  --g: rgba(34, 211, 122, 0.5);
+  --x: 7px;
+  --y: 19px;
+  position: absolute;
+  top: 26px;
+  bottom: 16px;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse 4.5px 1.3px at var(--x) var(--y), #fff, var(--c) 45%, transparent),
+    radial-gradient(ellipse 11px 4px at var(--x) var(--y), var(--g), transparent);
+  background-size: var(--tw) var(--th);
+  background-position: calc(var(--i) * var(--tw) * 0.37) calc(var(--i) * 38px * 3);
+}
+/* steady power/status lights: blue + green on every server */
+.cled-s {
+  left: 84%;
+  width: 12%;
+  background:
+    radial-gradient(ellipse 4px 1.2px at 30% 14px, #fff, #3d8bff 45%, transparent),
+    radial-gradient(ellipse 10px 4px at 30% 14px, rgba(61, 139, 255, 0.55), transparent),
+    radial-gradient(ellipse 4px 1.2px at 70% 24px, #fff, #22d37a 45%, transparent),
+    radial-gradient(ellipse 10px 4px at 70% 24px, rgba(34, 211, 122, 0.5), transparent);
+  background-size: 100% 38px;
+  animation: ledOn 0.25s calc(var(--b) + 1.1s) both;
+}
+/* drive activity — fast irregular green flicker */
+.cled-g {
+  --tw: 28px;
+  --th: 76px;
+  left: 37%;
+  width: 44%;
+  animation:
+    ledOn 0.25s calc(var(--b) + 1.2s) both,
+    ledFlicker calc(1.1s + var(--i) * 0.13s) steps(1) calc(var(--b) + 1.45s) infinite;
+}
+.cled-g2 {
+  --tw: 42px;
+  --th: 114px;
+  --x: 21px;
+  --y: 57px;
+  left: 37%;
+  width: 44%;
+  animation:
+    ledOn 0.25s calc(var(--b) + 1.25s) both,
+    ledFlicker calc(0.8s + var(--i) * 0.09s) steps(1) calc(var(--b) + 1.5s) infinite reverse;
+}
+/* network blue blink */
+.cled-b {
+  --c: #3d8bff;
+  --g: rgba(61, 139, 255, 0.55);
+  --tw: 56px;
+  --th: 76px;
+  --x: 35px;
+  --y: 57px;
+  left: 37%;
+  width: 44%;
+  animation:
+    ledOn 0.25s calc(var(--b) + 1.3s) both,
+    ledBlink calc(1.6s + var(--i) * 0.21s) linear calc(var(--b) + 1.55s) infinite;
+}
+/* sparse red fault / attention lights */
+.cled-r {
+  --c: #ff3344;
+  --g: rgba(255, 51, 68, 0.55);
+  --tw: 120px;
+  --th: 266px;
+  --x: 50%;
+  --y: 14px;
+  left: 4%;
+  width: 92%;
+  animation:
+    ledOn 0.25s calc(var(--b) + 1.4s) both,
+    ledBlink calc(2.3s + var(--i) * 0.27s) linear calc(var(--b) + 1.65s) infinite;
+}
+.crack-r .cled-g {
+  animation-duration: 0.25s, calc(1.3s + var(--i) * 0.17s);
+}
+.crack-r .cled {
+  background-position: calc(var(--i) * var(--tw) * 0.61 + 9px) calc(var(--i) * 38px * 5 + 38px);
+}
+
+/* ---------- floor & ceiling ---------- */
+.floor,
+.ceil {
+  position: absolute;
+  left: calc(var(--half) * -1);
+  top: calc(var(--step) * -3.5);
+  width: calc(var(--half) * 2);
+  height: calc(var(--step) * 7);
+}
+.floor {
+  transform: translateY(calc(var(--rh) / 2)) translateZ(calc(var(--step) * -4)) rotateX(90deg);
+  animation: floorMove calc(var(--dur) / 8) linear infinite;
+  background:
+    linear-gradient(90deg, rgba(90, 140, 230, 0.35) 0 2px, transparent 2px calc(100% - 2px), rgba(90, 140, 230, 0.35) calc(100% - 2px)),
+    linear-gradient(180deg, rgba(150, 180, 230, 0.16) 0 1px, transparent 1px) 0 0 / 100% calc(var(--step) / 2),
+    linear-gradient(90deg, rgba(150, 180, 230, 0.1) 0 1px, transparent 1px) 0 0 / calc(var(--half) / 3) 100%,
+    linear-gradient(180deg, #0c0f16, #090b10);
+}
+.ceil {
+  transform: translateY(calc(var(--rh) / -2)) translateZ(calc(var(--step) * -4)) rotateX(-90deg);
+  animation: ceilMove calc(var(--dur) / 8) linear infinite;
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(210, 225, 255, 0.45) 40% 60%, transparent 60%) 50% 0 / 30% var(--step) repeat-y,
+    linear-gradient(90deg, rgba(120, 150, 200, 0.25) 0 2px, transparent 2px calc(100% - 2px), rgba(120, 150, 200, 0.25) calc(100% - 2px)),
+    #07090d;
+}
+
+/* lite mode (set by Hero on low-power devices): fade out the big floor/ceiling planes */
+.floor,
+.ceil {
+  transition: opacity 0.8s, visibility 0s;
+}
+.is-lite .floor,
+.is-lite .ceil {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s, visibility 0s 0.8s;
+}
+.is-lite .corridor-light {
+  animation: none;
+}
+
+/* ==========================================================================
+   Marquee
+   ========================================================================== */
+.marquee {
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  background: linear-gradient(90deg, var(--red-lo), var(--red), var(--red-lo));
+  padding: 16px 0;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding-right: 28px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #fff;
+  white-space: nowrap;
+}
+.marquee-sep {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  transform: rotate(45deg);
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Sections
+   ========================================================================== */
+.section {
+  padding: 110px 0;
+  position: relative;
+}
+.section-alt {
+  background: var(--bg-alt);
+  border-block: 1px solid var(--line);
+}
+.section-head {
+  max-width: 800px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+
+/* ---------- About ---------- */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 64px;
+  align-items: center;
+}
+.about-copy h2 {
+  margin-bottom: 20px;
+}
+.about-copy > p {
+  margin-bottom: 16px;
+}
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 26px 0 0;
+  display: grid;
+  gap: 14px;
+}
+.check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  color: var(--text);
+}
+.check-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--red-a20);
+  color: var(--red-hi);
+}
+
+.about-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  max-width: 460px;
+  width: 100%;
+  margin: 0 auto;
+}
+.core {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--red-a35);
+}
+.ring i {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: var(--red-hi);
+  box-shadow: 0 0 14px var(--red);
+}
+.ring-1 { inset: 28%; animation: spin 10s linear infinite; }
+.ring-2 { inset: 14%; border-style: dashed; animation: spin 18s linear infinite reverse; }
+.ring-3 { inset: 0; border-color: var(--line-2); animation: spin 30s linear infinite; }
+.core-logo {
+  position: relative;
+  width: 34%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 0 0 10px var(--red-a10), 0 30px 70px -20px rgba(228, 17, 70, 0.75);
+}
+.core-logo img {
+  width: 62%;
+  height: auto;
+}
+.about-badge {
+  position: absolute;
+  right: 0;
+  bottom: 6%;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  box-shadow: 0 20px 40px -20px #000;
+  animation: float 6s ease-in-out infinite;
+}
+.about-badge strong {
+  font-family: var(--font-head);
+  font-size: 1.5rem;
+  color: var(--red);
+  line-height: 1.1;
+}
+.about-badge span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ---------- Service cards ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.card {
+  position: relative;
+  padding: 32px 28px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition: transform 0.5s var(--ease), border-color 0.3s;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(400px 220px at 0% 0%, rgba(228, 17, 70, 0.18), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red-hi), var(--red-lo));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+.card.is-visible:hover {
+  transform: translateY(-8px);
+  border-color: var(--red-a35);
+}
+.card:hover::before {
+  opacity: 1;
+}
+.card:hover::after {
+  transform: scaleX(1);
+}
+.card-num {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 2.4rem;
+  color: rgba(255, 255, 255, 0.04);
+  line-height: 1;
+}
+.card-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  margin-bottom: 22px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--red-hi), var(--red-lo));
+  box-shadow: 0 12px 26px -10px rgba(228, 17, 70, 0.8);
+  transition: transform 0.4s var(--ease);
+}
+.card:hover .card-icon {
+  transform: rotate(-8deg) scale(1.06);
+}
+.card h3 {
+  position: relative;
+  margin-bottom: 12px;
+}
+.card p {
+  position: relative;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+.card-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--red-hi);
+}
+.card-link svg {
+  transition: transform 0.25s var(--ease);
+}
+.card-link:hover svg {
+  transform: translateX(4px);
+}
+
+/* ---------- Why us ---------- */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.why {
+  display: flex;
+  gap: 18px;
+  padding: 34px 30px;
+  background: var(--bg);
+  transition: background-color 0.3s;
+}
+.why:hover {
+  background: var(--surface);
+}
+.why-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  color: var(--red-hi);
+  border: 1px solid var(--red-a35);
+  background: var(--red-a10);
+  transition: transform 0.4s var(--ease), background-color 0.3s, color 0.3s;
+}
+.why:hover .why-icon {
+  transform: translateY(-3px);
+  background: var(--red);
+  color: #fff;
+}
+.why h3 {
+  margin-bottom: 8px;
+}
+.why p {
+  font-size: 0.94rem;
+}
+
+/* ---------- Roadmap ---------- */
+.roadmap {
+  position: relative;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+.roadmap-line {
+  position: absolute;
+  top: 27px;
+  left: calc(100% / 12);
+  right: calc(100% / 12);
+  height: 2px;
+  background: linear-gradient(90deg, var(--red-hi), var(--red-lo));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s var(--ease) 0.2s;
+}
+.roadmap::before {
+  content: '';
+  position: absolute;
+  top: 27px;
+  left: calc(100% / 12);
+  right: calc(100% / 12);
+  height: 2px;
+  background: var(--line-2);
+}
+.roadmap.is-visible .roadmap-line {
+  transform: scaleX(1);
+}
+.step {
+  position: relative;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition-delay: var(--d);
+}
+.roadmap.is-visible .step {
+  opacity: 1;
+  transform: none;
+}
+.step-dot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--red-hi), var(--red-lo));
+  box-shadow: 0 0 0 6px var(--bg-alt), 0 0 0 7px var(--red-a35), 0 12px 30px -8px rgba(228, 17, 70, 0.8);
+}
+.step h3 {
+  font-size: 1.02rem;
+  margin-bottom: 6px;
+}
+.step p {
+  font-size: 0.9rem;
+}
+
+/* ---------- FAQ ---------- */
+.faq-wrap {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 64px;
+  align-items: start;
+}
+.faq-side {
+  position: sticky;
+  top: 110px;
+}
+.faq-side h2 {
+  margin-bottom: 18px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+.chip-tag {
+  padding: 8px 16px;
+  font-size: 0.86rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: var(--surface);
+  transition: border-color 0.25s, color 0.25s;
+}
+.chip-tag:hover {
+  border-color: var(--red);
+  color: var(--red-hi);
+}
+.faq-list {
+  display: grid;
+  gap: 12px;
+}
+.faq {
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  transition: border-color 0.3s;
+}
+.faq.is-open {
+  border-color: var(--red-a35);
+}
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font: 600 1rem var(--font-body);
+  text-align: left;
+  cursor: pointer;
+}
+.faq-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--red-a10);
+  color: var(--red-hi);
+  transition: transform 0.35s var(--ease), background-color 0.3s, color 0.3s;
+}
+.faq.is-open .faq-icon {
+  transform: rotate(45deg);
+  background: var(--red);
+  color: #fff;
+}
+.faq-a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--ease);
+}
+.faq.is-open .faq-a {
+  grid-template-rows: 1fr;
+}
+.faq-a > div {
+  overflow: hidden;
+}
+.faq-a p {
+  padding: 0 22px 22px;
+  font-size: 0.95rem;
+}
+
+/* ---------- Contact ---------- */
+.contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+.contact-info h2 {
+  margin-bottom: 16px;
+}
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 34px 0 0;
+  display: grid;
+  gap: 18px;
+}
+.info-list li {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.info-list div {
+  display: flex;
+  flex-direction: column;
+}
+.info-list small {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.info-list a:hover {
+  color: var(--red-hi);
+}
+.info-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--red-hi), var(--red-lo));
+}
+.form {
+  display: grid;
+  gap: 16px;
+  padding: 34px;
+  border-radius: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 60px -30px rgba(228, 17, 70, 0.35);
+}
+.form h3 {
+  font-size: 1.35rem;
+  margin-bottom: 4px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+  padding: 13px 14px;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+  border-color: var(--red);
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  padding: 80px 0 0;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1.2fr;
+  gap: 48px;
+  padding-bottom: 50px;
+}
+.footer h4 {
+  font-size: 1rem;
+  margin-bottom: 18px;
+}
+.footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+.footer ul a:hover {
+  color: var(--red-hi);
+}
+.footer-tag {
+  margin: 18px 0 22px;
+  max-width: 340px;
+  font-size: 0.94rem;
+}
+.socials {
+  display: flex;
+  gap: 10px;
+}
+.socials a,
+.to-top {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  color: var(--text);
+  transition: transform 0.25s var(--ease), background-color 0.25s, border-color 0.25s;
+}
+.socials a:hover,
+.to-top:hover {
+  transform: translateY(-3px);
+  background: var(--red);
+  border-color: var(--red);
+}
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-top: 22px;
+  padding-bottom: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   Keyframes (transform / opacity only)
+   ========================================================================== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ping {
+  0% { transform: scale(1); opacity: 0.8; }
+  80%, 100% { transform: scale(2.8); opacity: 0; }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.18; }
+}
+@keyframes meter {
+  from { transform: scaleX(0.18); }
+  to { transform: scaleX(0.96); }
+}
+@keyframes scan {
+  from { transform: translateY(-60%); }
+  to { transform: translateY(60%); }
+}
+@keyframes packet {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes hover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes glow {
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes approach {
+  from { transform: translateZ(calc(var(--step) * -4)); }
+  to { transform: translateZ(0); }
+}
+@keyframes fly {
+  from { transform: translateZ(calc(var(--step) * -7)); }
+  to { transform: translateZ(var(--step)); }
+}
+@keyframes floorMove {
+  from { transform: translateY(calc(var(--rh) / 2)) translateZ(calc(var(--step) * -4)) rotateX(90deg); }
+  to { transform: translateY(calc(var(--rh) / 2)) translateZ(calc(var(--step) * -3)) rotateX(90deg); }
+}
+@keyframes ceilMove {
+  from { transform: translateY(calc(var(--rh) / -2)) translateZ(calc(var(--step) * -4)) rotateX(-90deg); }
+  to { transform: translateY(calc(var(--rh) / -2)) translateZ(calc(var(--step) * -3)) rotateX(-90deg); }
+}
+@keyframes brandIn {
+  /* accelerates out of the depth like the racks, overshoots, then settles */
+  0% { transform: scale(0.03); opacity: 0; animation-timing-function: cubic-bezier(0.7, 0, 0.9, 0.5); }
+  12% { opacity: 1; }
+  72% { transform: scale(1.12); opacity: 1; animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes brandFlash {
+  from { transform: scale(0.2); opacity: 0.9; }
+  to { transform: scale(3.2); opacity: 0; }
+}
+@keyframes spawn {
+  /* fade in at the far end; at the near end the rack is already past the screen edge when it wraps */
+  0% { opacity: 0; }
+  20%, 100% { opacity: 1; }
+}
+@keyframes drawX {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes drawY {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes buildUp {
+  from { transform: scaleY(0); opacity: 0; }
+  to { transform: scaleY(1); opacity: 1; }
+}
+@keyframes ledOn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes ledBlink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0.2; }
+}
+@keyframes ledFlicker {
+  /* irregular on/off bursts, like disk activity */
+  0% { opacity: 1; }
+  9% { opacity: 0.15; }
+  16% { opacity: 1; }
+  38% { opacity: 0.25; }
+  42% { opacity: 1; }
+  47% { opacity: 0.1; }
+  53% { opacity: 1; }
+  78% { opacity: 0.3; }
+  84% { opacity: 1; }
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .nav-links {
+    gap: 22px;
+  }
+  .cards,
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 960px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+  .nav-links {
+    position: fixed;
+    inset: 92px 0 0 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 16px 24px;
+    background: var(--bg);
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .nav-links.is-open {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .nav-links a:not(.btn) {
+    padding: 16px 0;
+    font-size: 1.1rem;
+    color: var(--text);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-links a:not(.btn)::after {
+    display: none;
+  }
+  .nav-cta {
+    margin-top: 20px;
+    padding: 14px 20px;
+  }
+  .nav:has(.is-open) {
+    background: var(--bg);
+  }
+
+  .about,
+  .faq-wrap,
+  .contact {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .faq-side {
+    position: static;
+  }
+  .about-visual {
+    max-width: 360px;
+  }
+
+  .roadmap {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .roadmap::before,
+  .roadmap-line {
+    top: 28px;
+    bottom: 28px;
+    left: 27px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+  .roadmap-line {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  .roadmap.is-visible .roadmap-line {
+    transform: scaleY(1);
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    column-gap: 20px;
+    text-align: left;
+    align-items: center;
+  }
+  .step-dot {
+    grid-row: span 2;
+    margin: 0;
+  }
+  .step h3 {
+    align-self: end;
+    margin: 0;
+  }
+  .step p {
+    align-self: start;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer-grid > div:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 16px;
+  }
+  .section {
+    padding: 80px 0;
+  }
+  .brand-text {
+    font-size: 0.98rem;
+  }
+  .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+  .cards,
+  .why-grid,
+  .form-row,
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .form {
+    padding: 24px 20px;
+  }
+  .hero-actions .btn {
+    flex: 1 1 100%;
+  }
+
+  .brand-flash {
+    width: 220px;
+    height: 220px;
+    margin: -110px 0 0 -110px;
+  }
+}
+
+/* Respect users who prefer less motion. The hero servers and the About logo rings are brand
+   centerpieces and always play; everything else on the page (reveals, marquee, rings, hovers) goes static. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *:not(.hero, .hero *, .about-visual, .about-visual *),
+  *:not(.hero *, .about-visual *)::before,
+  *:not(.hero *, .about-visual *)::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal,
+  .step {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

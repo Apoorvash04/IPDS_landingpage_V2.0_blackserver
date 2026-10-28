@@ -1,0 +1,15 @@
+{
+  "name": "ipds-landing",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "node node_modules/next/dist/bin/next dev -p 5190 -H 0.0.0.0",
+    "build": "node node_modules/next/dist/bin/next build",
+    "start": "node node_modules/next/dist/bin/next start -p 4190 -H 0.0.0.0"
+  },
+  "dependencies": {
+    "next": "^16.4.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  }
+}
