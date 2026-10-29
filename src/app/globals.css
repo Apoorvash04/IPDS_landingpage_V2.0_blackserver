@@ -55,6 +55,13 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
+/* body overflow-x alone doesn't stop mobile Chrome from letting the page pan sideways when
+   something pokes out (e.g. the spinning About rings, whose rotated box is ~1.4x wider).
+   clip (unlike hidden) doesn't create a scroll container, so position: sticky inside still works. */
+main,
+.footer {
+  overflow-x: clip;
+}
 
 img {
   display: block;
