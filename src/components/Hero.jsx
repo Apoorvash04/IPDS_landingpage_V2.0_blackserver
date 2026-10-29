@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import ServerCorridor from './ServerCorridor';
+import CorridorVideo from './CorridorVideo';
 import Icon from './Icon';
 
 export default function Hero() {
@@ -38,6 +39,7 @@ export default function Hero() {
   return (
     <section id="home" ref={ref} className={`hero ${visible ? '' : 'is-paused'} ${lite ? 'is-lite' : ''}`}>
       <ServerCorridor />
+      <CorridorVideo playing={visible} />
 
       <div className="container hero-content">
         {/* Company name flies out of the far end of the server corridor, then lands with a light burst */}

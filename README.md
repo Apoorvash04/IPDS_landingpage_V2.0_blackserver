@@ -34,5 +34,9 @@ npm run start     # serve the production build → http://localhost:4190
 - Scroll reveals use one shared `IntersectionObserver` and stop observing each element once it has appeared.
 - The hero corridor is pure CSS 3D. On load, racks draw as red wireframes, fill in, then their LEDs switch on, while the room moves toward the viewer.
 - Auto quality: after the intro the hero measures its frame rate, and on devices below 45 fps (no GPU, remote desktop) it drops the floor and ceiling planes.
+- Phones (≤600px wide) don't run the live 3D corridor; phone GPUs can't keep it smooth. They play
+  `public/hero/corridor-intro.mp4` then `corridor-loop.mp4` (~1.4 MB total), rendered frame by frame from the CSS scene, so it
+  looks identical (`CorridorVideo.jsx`). Desktop never downloads them. If you change the corridor CSS, re-render with
+  `scripts/render-corridor-video.mjs` (instructions at the top of the file).
 - With `prefers-reduced-motion`, everything except the hero animation goes static.
 - The contact form opens the visitor's mail app (`mailto:`), so no backend is needed.

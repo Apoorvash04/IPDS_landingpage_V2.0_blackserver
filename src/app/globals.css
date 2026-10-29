@@ -757,6 +757,55 @@ p {
   animation: none;
 }
 
+/* Phones: every infinitely blinking LED strip is its own full-height GPU layer (64 of them,
+   ~230MB at phone pixel density), which is enough for mobile Chrome to discard and reload the tab.
+   Here the LEDs still power on, then stay lit, so their layers are released once the intro ends. */
+@media (max-width: 768px), (pointer: coarse) {
+  .cled-g {
+    animation: ledOn 0.25s calc(var(--b) + 1.2s) both;
+  }
+  .cled-g2 {
+    animation: ledOn 0.25s calc(var(--b) + 1.25s) both;
+  }
+  .cled-b {
+    animation: ledOn 0.25s calc(var(--b) + 1.3s) both;
+  }
+  .cled-r {
+    animation: ledOn 0.25s calc(var(--b) + 1.4s) both;
+  }
+}
+/* Phones (portrait): the corridor plays as a pre-rendered video instead (see CorridorVideo.jsx).
+   It sits under the vignette, like the live scene it replaces. */
+.corridor-video {
+  display: none;
+}
+@media (max-width: 600px) {
+  .corridor .scene,
+  .corridor-light {
+    display: none;
+  }
+  .corridor-video {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+  }
+  .corridor-video video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .corridor-video.is-looping .cv-intro {
+    opacity: 0;
+  }
+}
+/* off-screen the corridor is hidden as well as paused, so its layers free their memory for the rest of the page */
+.hero.is-paused .corridor {
+  visibility: hidden;
+}
+
 /* ==========================================================================
    Marquee
    ========================================================================== */
