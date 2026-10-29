@@ -27,8 +27,25 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Lock the page behind the open menu (class on <html> — body overflow alone doesn't stop iOS scrolling)
+  // and close it on Escape or when the viewport grows past the mobile breakpoint (rotation / resize).
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
+    if (!open) {
+      setDropOpen(false);
+      return;
+    }
+    const root = document.documentElement;
+    root.classList.add('nav-locked');
+    const desktop = window.matchMedia('(min-width: 961px)');
+    const onChange = (e) => e.matches && setOpen(false);
+    const onKey = (e) => e.key === 'Escape' && setOpen(false);
+    desktop.addEventListener('change', onChange);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      root.classList.remove('nav-locked');
+      desktop.removeEventListener('change', onChange);
+      window.removeEventListener('keydown', onKey);
+    };
   }, [open]);
 
   // Close everything after a click; blur so :focus-within doesn't keep the desktop dropdown open.
@@ -45,7 +62,7 @@ export default function Navbar() {
           <img src="/logo-icon.png" alt="IPDS" width="64" height="64" />
         </a>
 
-        <nav className={`nav-links ${open ? 'is-open' : ''}`} aria-label="Primary">
+        <nav id="primary-nav" className={`nav-links ${open ? 'is-open' : ''}`} aria-label="Primary">
           {NAV.map((n) =>
             n.dropdown ? (
               <div key={n.href} className={`nav-drop ${dropOpen ? 'is-open' : ''}`}>
@@ -90,12 +107,17 @@ export default function Navbar() {
             Contact Us
           </a>
           <button
-            className="nav-toggle"
+            className={`nav-toggle ${open ? 'is-open' : ''}`}
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
+            aria-controls="primary-nav"
             onClick={() => setOpen((o) => !o)}
           >
-            <Icon name={open ? 'close' : 'menu'} />
+            <span className="burger" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
           </button>
         </div>
       </div>
