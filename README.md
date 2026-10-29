@@ -12,7 +12,7 @@ npm run start     # serve the production build → http://localhost:4190
 ```
 
 > The npm scripts call `node node_modules/next/dist/bin/next` directly because the `&` in the
-> folder name `IP&DS_3` breaks npm's Windows `.cmd` shims.
+> folder name `IP&DS_2.0` breaks npm's Windows `.cmd` shims.
 
 ## Structure
 
@@ -22,6 +22,9 @@ npm run start     # serve the production build → http://localhost:4190
 - `src/components/`: one component per section. `ServerCorridor.jsx` is the 3D server-room intro in the hero.
   Only `Navbar`, `Hero`, `FAQ`, `Contact` and `RevealObserver` are client components (`'use client'`).
   The rest render on the server and ship no JS.
+- SEO: `src/app/robots.js` (`/robots.txt`), `src/app/sitemap.js` (`/sitemap.xml`), `src/app/opengraph-image.jsx`
+  (social share card), `src/components/StructuredData.jsx` (schema.org JSON-LD: business, services, FAQs).
+  The live URL is `SITE_URL` in `src/data.js`. Change it there if the domain changes.
 - `src/app/globals.css`: design tokens (brand red `#E41146` from the logo) and all styles and animations.
 
 ## Performance notes

@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div>
-          <a href="#home" className="brand">
+          <a href="/#home" className="brand">
             <img src="/logo-icon.png" alt="" width="36" height="36" loading="lazy" />
             <span className="brand-text">
               IP <b>&amp;</b> Data Solutions
@@ -27,11 +27,12 @@ export default function Footer() {
         <div>
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#services">Our Services</a></li>
-            <li><a href="#roadmap">Roadmap</a></li>
-            <li><a href="#faq">FAQs</a></li>
-            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="/#about">About Us</a></li>
+            <li><a href="/#services">Our Services</a></li>
+            <li><a href="/services">Professional Services</a></li>
+            <li><a href="/#roadmap">Roadmap</a></li>
+            <li><a href="/#faq">FAQs</a></li>
+            <li><a href="/#contact">Contact Us</a></li>
           </ul>
         </div>
 
@@ -49,7 +50,7 @@ export default function Footer() {
 
       <div className="container footer-bottom">
         <span>© {new Date().getFullYear()} IPDS — IP &amp; Data Solutions. All rights reserved.</span>
-        <a href="#home" className="to-top" aria-label="Back to top">
+        <a href="#top" className="to-top" aria-label="Back to top">
           <Icon name="up" size={18} />
         </a>
       </div>

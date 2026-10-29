@@ -1,5 +1,8 @@
 // All content sourced from the original site: https://www.ipds.co.in/
 
+// Public URL of the live site — used for canonical links, sitemap, robots and social previews.
+export const SITE_URL = 'https://www.ipds.co.in';
+
 export const CONTACT = {
   address: '371, Ayushman Ashapurna Valley, Near New High Court, Jhalamand, Jodhpur',
   phones: ['+91 95495 42771', '+91 99298 42771'],
@@ -13,13 +16,84 @@ export const SOCIALS = [
   { name: 'LinkedIn', icon: 'linkedin', href: 'https://www.linkedin.com/company/ip-data-solution-s/' },
 ];
 
+// Links point at `/#…` so they also work from other pages (e.g. /services).
+// The entry with `dropdown` renders the Professional Services menu.
 export const NAV = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Why Us', href: '#why' },
-  { label: 'Roadmap', href: '#roadmap' },
-  { label: 'FAQs', href: '#faq' },
+  { label: 'Home', href: '/#home' },
+  { label: 'About', href: '/#about' },
+  { label: 'Professional Services', href: '/services', dropdown: true },
+  { label: 'Why Us', href: '/#why' },
+  { label: 'Roadmap', href: '/#roadmap' },
+  { label: 'FAQs', href: '/#faq' },
+];
+
+// The /services page and the header dropdown. `short` is the dropdown label.
+export const PRO_SERVICES = [
+  {
+    slug: 'it-consulting',
+    icon: 'hierarchy',
+    title: 'IT Consulting & System Integration',
+    short: 'IT Consulting & Integration',
+    text: 'Plan, connect and tune your IT so every system works together, from the first roadmap to regular health checks.',
+    items: ['IT Consultancy', 'System Integration', 'IT Infrastructure Planning', 'Configuration Review & Health Check'],
+  },
+  {
+    slug: 'network-infrastructure',
+    icon: 'router',
+    title: 'Network Infrastructure & Connectivity',
+    short: 'Network Infrastructure',
+    text: 'Fast, stable networks that link your offices, branches and people, wired or wireless.',
+    items: [
+      'Network Setup & Configuration',
+      'LAN, WAN, SD-WAN & MPLS',
+      'ST-WAN / SD-WAN Solutions',
+      'Wi-Fi & Wireless Networking',
+      'ZTNA (Zero Trust Network Access)',
+    ],
+  },
+  {
+    slug: 'cybersecurity',
+    icon: 'shield',
+    title: 'Cybersecurity & Access Control',
+    short: 'Cybersecurity',
+    text: 'Keep threats out and the right people in, across your network, your devices and your doors.',
+    items: [
+      'Security Solutions',
+      'Biometric Security',
+      'Access Control Systems',
+      'Secure SD-WAN',
+      'VPN Replacement Solutions',
+    ],
+  },
+  {
+    slug: 'data-protection',
+    icon: 'database',
+    title: 'Data Protection & Disaster Recovery',
+    short: 'Data Protection',
+    text: 'Your data, backed up, inspected and recoverable, so one bad day never becomes a lost business.',
+    items: ['Data Inspection', 'Cloud-to-Cloud Backup', 'Cloud-to-Offline Backup', 'Disaster Recovery', 'Storage Security'],
+  },
+  {
+    slug: 'hardware-data-center',
+    icon: 'server',
+    title: 'Hardware, Servers & Data Center Solutions',
+    short: 'Hardware & Data Center',
+    text: 'The physical backbone of your IT: supplied, rented, installed and kept running.',
+    items: ['Hardware Supply & Rental', 'Hardware Support', 'Server Infrastructure', 'Data Center Services'],
+  },
+  {
+    slug: 'managed-it',
+    icon: 'headset',
+    title: 'Managed IT Services & Support',
+    short: 'Managed IT Support',
+    text: 'One team watching, fixing and maintaining your IT, remotely and on-site, all year round.',
+    items: [
+      'Remote & On-site IT Support',
+      'Server & Network Monitoring',
+      'Annual Maintenance Contracts (AMC)',
+      'Ongoing IT Maintenance',
+    ],
+  },
 ];
 
 export const ABOUT_POINTS = [

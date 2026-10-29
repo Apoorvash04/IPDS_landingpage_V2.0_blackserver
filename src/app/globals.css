@@ -214,11 +214,19 @@ p {
   background: rgba(7, 8, 12, 0.92);
   border-bottom-color: var(--line);
 }
+/* logo | centred links | CTA — the outer columns share the spare width equally, so the links sit dead centre */
 .nav-inner {
   height: 92px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+.nav-actions {
+  grid-column: 3;
+  justify-self: end;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
 }
 .nav-logo img {
   width: 64px;
@@ -249,13 +257,13 @@ p {
   align-items: center;
   gap: 30px;
 }
-.nav-links a:not(.btn) {
+.nav-link {
   position: relative;
   font-size: 0.94rem;
   color: var(--muted);
   transition: color 0.2s;
 }
-.nav-links a:not(.btn)::after {
+.nav-link::after {
   content: '';
   position: absolute;
   left: 0;
@@ -267,14 +275,94 @@ p {
   transform-origin: left;
   transition: transform 0.3s var(--ease);
 }
-.nav-links a:not(.btn):hover {
+.nav-link:hover {
   color: var(--text);
 }
-.nav-links a:not(.btn):hover::after {
+.nav-link:hover::after {
   transform: scaleX(1);
 }
 .nav-cta {
   padding: 10px 20px;
+}
+.nav-cta-mobile {
+  display: none;
+}
+
+/* ---------- Professional Services dropdown ---------- */
+.nav-drop {
+  position: relative;
+}
+.nav-drop-head {
+  display: flex;
+  align-items: center;
+}
+.nav-drop-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-chevron {
+  transition: transform 0.3s var(--ease);
+}
+.nav-drop-toggle {
+  display: none;
+}
+.nav-drop-panel {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 560px;
+  padding-top: 22px; /* hover bridge between the label and the panel */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 10px);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0.25s;
+}
+.nav-drop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: rgba(11, 13, 19, 0.98);
+  border: 1px solid var(--line-2);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+}
+.nav-drop-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text);
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+.nav-drop-item svg {
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.nav-drop-item:hover {
+  border-color: var(--red-a35);
+  background: var(--red-a10);
+}
+.nav-drop-item:hover svg {
+  color: var(--red-hi);
+}
+@media (min-width: 961px) {
+  .nav-drop:hover .nav-drop-panel,
+  .nav-drop:focus-within .nav-drop-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+  .nav-drop:hover .nav-chevron,
+  .nav-drop:focus-within .nav-chevron {
+    transform: rotate(180deg);
+  }
 }
 .nav-toggle {
   display: none;
@@ -1286,6 +1374,322 @@ p {
 }
 
 /* ==========================================================================
+   Professional Services page (/services)
+   ========================================================================== */
+.svc-hero {
+  position: relative;
+  padding: 180px 0 80px;
+  text-align: center;
+  overflow: hidden;
+}
+/* static circuit-grid backdrop, fading out from the top */
+.svc-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 300px at 50% 0%, rgba(228, 17, 70, 0.16), transparent 70%),
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 48px 48px,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 35%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 35%, transparent 75%);
+  pointer-events: none;
+}
+.svc-hero .container {
+  position: relative;
+}
+.svc-hero h1 {
+  max-width: 880px;
+  margin: 0 auto 22px;
+}
+.svc-hero p {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+}
+.svc-jump {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 38px;
+}
+.svc-jump b {
+  color: var(--red-hi);
+  margin-right: 4px;
+}
+
+/* ---------- Decrypt headings ---------- */
+.decrypt {
+  position: relative;
+}
+.decrypt-fx {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.decrypt.is-armed .decrypt-fx {
+  visibility: visible;
+}
+/* transparent, not hidden, so screen readers still read the real heading */
+.decrypt.is-armed .decrypt-real,
+.decrypt.is-armed .decrypt-real * {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background: none;
+}
+.decrypt-fx i {
+  font-style: normal;
+  color: var(--red-hi);
+  opacity: 0.7;
+}
+.decrypt-acc {
+  color: var(--red-hi);
+}
+
+/* ---------- Layout: sticky rail + panels ---------- */
+.svc-list {
+  padding-top: 40px;
+}
+.svc-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.svc-rail {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  gap: 18px;
+}
+.svc-rail-track {
+  position: relative;
+  flex: none;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+.svc-rail-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--red-hi), var(--red-lo));
+  transform: scaleY(0);
+  transform-origin: top;
+}
+.svc-rail ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.svc-rail a {
+  display: flex;
+  gap: 12px;
+  padding: 9px 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--muted);
+  transition: color 0.25s, transform 0.35s var(--ease);
+}
+.svc-rail a span {
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.22);
+  transition: color 0.25s;
+}
+.svc-rail a:hover,
+.svc-rail a.is-active {
+  color: var(--text);
+}
+.svc-rail a.is-active {
+  transform: translateX(6px);
+}
+.svc-rail a.is-active span {
+  color: var(--red-hi);
+}
+.svc-stack {
+  display: grid;
+  gap: 28px;
+}
+
+/* ---------- Service panel ---------- */
+.svc {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 40px;
+  padding: 40px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  scroll-margin-top: 110px;
+  transition: border-color 0.3s;
+}
+.svc:hover {
+  border-color: var(--red-a35);
+}
+/* the scan does the revealing, not the generic fade-up */
+.svc.reveal,
+.svc.reveal.is-visible {
+  opacity: 1;
+  animation: none;
+}
+/* cover that retracts downwards in sync with the beam */
+.svc::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: 3;
+  background: var(--bg);
+  transform-origin: bottom;
+  pointer-events: none;
+}
+.svc.is-visible::after {
+  animation: unveil 1.1s var(--ease) forwards;
+}
+.svc-beam {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.svc-beam::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 90px;
+  background: linear-gradient(to top, rgba(228, 17, 70, 0.22), transparent);
+}
+.svc-beam::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--red-hi) 20%, #fff 50%, var(--red-hi) 80%, transparent);
+  box-shadow: 0 0 18px 3px rgba(228, 17, 70, 0.6);
+}
+.svc.is-visible .svc-beam {
+  animation: beamDown 1.1s var(--ease) forwards;
+}
+/* cursor spotlight */
+.svc-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 520px;
+  height: 520px;
+  margin: -260px 0 0 -260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(228, 17, 70, 0.16), transparent 65%);
+  transform: translate(var(--mx, 0), var(--my, 0));
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+.svc:hover .svc-glow {
+  opacity: 1;
+}
+.svc-main,
+.svc-items {
+  position: relative;
+  z-index: 1;
+}
+.svc-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.svc-num {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 3.4rem;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14);
+}
+.svc-title {
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  margin-bottom: 14px;
+}
+.svc-main p {
+  margin-bottom: 22px;
+}
+.svc-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  align-content: center;
+}
+.svc-items li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.95rem;
+  color: var(--text);
+  transition: border-color 0.25s, transform 0.35s var(--ease);
+}
+.svc-items li:hover {
+  border-color: var(--red-a35);
+  transform: translateX(6px);
+}
+/* status LED: grey until the panel's scan finishes, then each one switches on in turn */
+.svc-led {
+  position: relative;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+.svc-led::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  opacity: 0;
+}
+.svc-items li > span:last-child {
+  opacity: 0.3;
+}
+.svc.is-visible .svc-led::after {
+  animation: online 0.5s var(--ease) calc(1000ms + var(--i) * 140ms) forwards;
+}
+.svc.is-visible .svc-items li > span:last-child {
+  animation: itemOn 0.5s var(--ease) calc(1000ms + var(--i) * 140ms) forwards;
+}
+
+/* ---------- Closing CTA ---------- */
+.svc-cta {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+.svc-cta h2 {
+  margin-bottom: 16px;
+}
+.svc-cta p {
+  margin-bottom: 30px;
+}
+
+/* ==========================================================================
    Keyframes (transform / opacity only)
    ========================================================================== */
 @keyframes fadeUp {
@@ -1394,6 +1798,23 @@ p {
 @keyframes marquee {
   to { transform: translateX(-50%); }
 }
+@keyframes unveil {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(0); }
+}
+@keyframes beamDown {
+  from { transform: translateY(-100%); opacity: 1; }
+  85% { opacity: 1; }
+  to { transform: translateY(0); opacity: 0; }
+}
+@keyframes online {
+  from { opacity: 0; transform: scale(2.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes itemOn {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
 
 /* ==========================================================================
    Responsive
@@ -1412,6 +1833,12 @@ p {
   .nav-toggle {
     display: inline-flex;
   }
+  .nav-actions .nav-cta {
+    display: none;
+  }
+  .nav-cta-mobile {
+    display: inline-flex;
+  }
   .nav-links {
     position: fixed;
     inset: 92px 0 0 0;
@@ -1419,6 +1846,7 @@ p {
     align-items: stretch;
     gap: 0;
     padding: 16px 24px;
+    overflow-y: auto;
     background: var(--bg);
     opacity: 0;
     transform: translateY(-12px);
@@ -1430,14 +1858,70 @@ p {
     transform: none;
     pointer-events: auto;
   }
-  .nav-links a:not(.btn) {
+  .nav-links .nav-link {
     padding: 16px 0;
     font-size: 1.1rem;
     color: var(--text);
     border-bottom: 1px solid var(--line);
   }
-  .nav-links a:not(.btn)::after {
+  .nav-link::after,
+  .nav-chevron {
     display: none;
+  }
+  .nav-drop-head {
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-drop-head .nav-link {
+    flex: 1;
+    border-bottom: 0;
+  }
+  .nav-drop-toggle {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    background: none;
+    border: 1px solid var(--line-2);
+    border-radius: 10px;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .nav-drop-toggle svg {
+    transition: transform 0.3s var(--ease);
+  }
+  .nav-drop.is-open .nav-drop-toggle svg {
+    transform: rotate(180deg);
+  }
+  /* collapsed submenu: same grid-rows trick as the FAQ answers */
+  .nav-drop-panel {
+    position: static;
+    width: auto;
+    padding: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s var(--ease);
+  }
+  .nav-drop.is-open .nav-drop-panel {
+    grid-template-rows: 1fr;
+  }
+  .nav-drop-grid {
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    gap: 8px;
+  }
+  .nav-drop.is-open .nav-drop-grid {
+    padding: 12px 0;
+  }
+  .nav-drop-item {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
   }
   .nav-cta {
     margin-top: 20px;
@@ -1507,6 +1991,17 @@ p {
   .footer-grid > div:first-child {
     grid-column: 1 / -1;
   }
+
+  .svc-layout {
+    grid-template-columns: 1fr;
+  }
+  .svc-rail {
+    display: none;
+  }
+  .svc {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1534,6 +2029,15 @@ p {
   }
   .hero-actions .btn {
     flex: 1 1 100%;
+  }
+  .nav-drop-grid {
+    grid-template-columns: 1fr;
+  }
+  .svc-hero {
+    padding: 140px 0 56px;
+  }
+  .svc {
+    padding: 28px 20px;
   }
 
   .brand-flash {

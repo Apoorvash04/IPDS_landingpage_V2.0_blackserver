@@ -9,10 +9,12 @@ import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import RevealObserver from '../components/RevealObserver';
+import StructuredData from '../components/StructuredData';
 
 export default function Home() {
   return (
     <>
+      <StructuredData />
       <Navbar />
       <main>
         <Hero />

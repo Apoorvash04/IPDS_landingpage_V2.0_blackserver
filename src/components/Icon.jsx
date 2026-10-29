@@ -72,6 +72,36 @@ const PATHS = {
       <path d="M21 3v5h-5M3 21v-5h5" />
     </>
   ),
+  hierarchy: (
+    <>
+      <circle cx="12" cy="5" r="2.5" />
+      <circle cx="5" cy="19" r="2.5" />
+      <circle cx="19" cy="19" r="2.5" />
+      <path d="M12 7.5v4M12 11.5l-5.5 5.2M12 11.5l5.5 5.2" />
+    </>
+  ),
+  router: (
+    <>
+      <rect x="3" y="13" width="18" height="8" rx="2" />
+      <path d="M7 17h.01M11 17h.01M12 13V9" />
+      <path d="M8.5 6.5a5 5 0 0 1 7 0M6 4a8.5 8.5 0 0 1 12 0" />
+    </>
+  ),
+  database: (
+    <>
+      <ellipse cx="12" cy="5" rx="8" ry="3" />
+      <path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5" />
+      <path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" />
+    </>
+  ),
+  headset: (
+    <>
+      <path d="M3 14v-2a9 9 0 0 1 18 0v2" />
+      <path d="M21 15a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2zM3 15a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2z" />
+      <path d="M18 17v1a3 3 0 0 1-3 3h-3" />
+    </>
+  ),
+  chevron: <path d="m6 9 6 6 6-6" />,
   check: <path d="M20 6 9 17l-5-5" />,
   arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
   plus: <path d="M12 5v14M5 12h14" />,
